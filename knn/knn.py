@@ -26,16 +26,18 @@ def classify(input, dataset, labels, k):
         class_count[label] = class_count.get(label, 0)+1
     return max(class_count, key=class_count.get)
 
+dataset_split_rate=0.9
 dataset=np.loadtxt('datingTestSet2.txt',delimiter='\t')
 dataset=autoNom(dataset)
-train_data=dataset[:int(len(dataset)*0.9),:-1]
-train_label=dataset[:int(len(dataset)*0.9),-1]
-test_data=dataset[int(len(dataset)*0.9):,:-1]
-test_label=dataset[int(len(dataset)*0.9):,-1]
+train_data=dataset[:int(len(dataset)*dataset_split_rate),:-1]
+train_label=dataset[:int(len(dataset)*dataset_split_rate),-1]
+test_data=dataset[int(len(dataset)*dataset_split_rate):,:-1]
+test_label=dataset[int(len(dataset)*dataset_split_rate):,-1]
 true_count=0
 for index in range(len(test_data)):
     result=classify(test_data[index],train_data,train_label,3)
     if result==test_label[index]:
         true_count+=1
-print(true_count/len(test_data))
+accuracy_rate=true_count/len(test_data)
+print(accuracy_rate)
 # print(classify([0,0],group,labels,3))
