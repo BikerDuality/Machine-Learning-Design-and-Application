@@ -1,5 +1,13 @@
 import numpy as np
 
+def autoNom(dataset):
+    dataset_min=dataset.min(0)
+    dataset_max=dataset.max(0)
+    dataset_range=dataset_max-dataset_min
+    norm_dataset=np.zeros(dataset.shape)
+    norm_dataset=dataset-np.tile(dataset_min,(dataset.shape[0],1))
+    norm_dataset=norm_dataset/np.tile(dataset_range,(dataset.shape[0],1))
+    return norm_dataset
 
 def distance(input, dataset):
     dataset_size = dataset.shape[0]
@@ -18,6 +26,16 @@ def classify(input, dataset, labels, k):
         class_count[label] = class_count.get(label, 0)+1
     return max(class_count, key=class_count.get)
 
-group=np.array([(1,1),(1,2),(0,1),(0,2)])
-labels=['A','A','B','B']
-print(classify([0,0],group,labels,3))
+dataset=np.loadtxt('datingTestSet2.txt',delimiter='\t')
+dataset=autoNom(dataset)
+train_data=dataset[:int(len(dataset)*0.9),:-1]
+train_label=dataset[:int(len(dataset)*0.9),-1]
+test_data=dataset[int(len(dataset)*0.9):,:-1]
+test_label=dataset[int(len(dataset)*0.9):,-1]
+true_count=0
+for index in range(len(test_data)):
+    result=classify(test_data[index],train_data,train_label,3)
+    if result==test_label[index]:
+        true_count+=1
+print(true_count/len(test_data))
+# print(classify([0,0],group,labels,3))
