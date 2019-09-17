@@ -27,6 +27,7 @@ def classify(input, dataset, labels, k):
     return max(class_count, key=class_count.get)
 
 dataset_split_rate=0.9
+k_neighbor=3
 dataset=np.loadtxt('datingTestSet2.txt',delimiter='\t')
 dataset=autoNom(dataset)
 train_data=dataset[:int(len(dataset)*dataset_split_rate),:-1]
@@ -35,7 +36,7 @@ test_data=dataset[int(len(dataset)*dataset_split_rate):,:-1]
 test_label=dataset[int(len(dataset)*dataset_split_rate):,-1]
 true_count=0
 for index in range(len(test_data)):
-    result=classify(test_data[index],train_data,train_label,3)
+    result=classify(test_data[index],train_data,train_label,k_neighbor)
     if result==test_label[index]:
         true_count+=1
 accuracy_rate=true_count/len(test_data)
