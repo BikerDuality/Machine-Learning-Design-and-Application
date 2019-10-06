@@ -11,7 +11,7 @@ class BayesClassifier():   #简单贝叶斯分类器
         self.FLists.remove(self.Label)
         return self.FLists
     
- # 分离数据：数据集和标签
+    # 分离数据：数据集和标签
     def splitData(self, dataSets):
         labels = [ cl[self.Label] for cl in dataSets ] # 标签数据集
         features = [] # 属性数据集
@@ -20,11 +20,11 @@ class BayesClassifier():   #简单贝叶斯分类器
             for fa in dataSets[i]: # 处理每一个数据
                 if fa != self.Label: # 判断是标签，还是属性
                     feature[fa] = dataSets[i][fa]
-            print(feature)
+            # print(feature)
             features.append(feature)
         return features, labels
     
-     # 训练简单贝叶斯分类器    
+    # 训练简单贝叶斯分类器    
     def train(self,features,labels):
         self.sampleNum = len(features)   # 样本数目
         self.countDic = {}               # 统计各个条件概率的出现次数
@@ -77,8 +77,8 @@ class BayesClassifier():   #简单贝叶斯分类器
         self.countDic.clear()
         
 if __name__ == "__main__":
-#data
-  data = [
+    #data
+    data = [
 {"Outlook":"Sunny","Temp":"Hot","Humidity":"High","Windy":"Weak","class":"No" },
 {"Outlook":"Sunny","Temp":"Hot","Humidity":"High","Windy":"Strong","class":"No"},
 {"Outlook":"Overcast","Temp":"Hot","Humidity":"High","Windy":"Weak","class":"Yes" },
@@ -93,10 +93,12 @@ if __name__ == "__main__":
 {"Outlook":"Overcast","Temp":"Mild","Humidity":"High","Windy":"Strong","class":"Yes"},
 {"Outlook":"Overcast","Temp":"Hot","Humidity":"Normal","Windy":"Weak","class":"Yes"},
 {"Outlook":"Rain","Temp":"Mild","Humidity":"High","Windy":"Strong","class":"No" }]
-#calculate
-  NBC = BayesClassifier()
-  NBC.getFeatures(data[0], "class")
-  #ToDo 获取数据 
-  #ToDo 进行训练 
-  print(NBC.classify({"Outlook":"Sunny","Temp":"Cool","Humidity":"High", "Windy":"Strong"}))
-  print(NBC.classify({"Outlook":"Overcast","Temp":"Cool","Humidity":"Normal", "Windy":"Strong"}))
+    #calculate
+    NBC = BayesClassifier()
+    NBC.getFeatures(data[0], "class")
+    #ToDo 获取数据 
+    features, labels = NBC.splitData(data)
+    NBC.train(features, labels)
+    #ToDo 进行训练 
+    print(NBC.classify({"Outlook":"Sunny","Temp":"Cool","Humidity":"High", "Windy":"Strong"}))
+    print(NBC.classify({"Outlook":"Overcast","Temp":"Cool","Humidity":"Normal", "Windy":"Strong"}))
