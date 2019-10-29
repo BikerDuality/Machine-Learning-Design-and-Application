@@ -23,6 +23,6 @@ xy = np.vstack([XX.ravel(), YY.ravel()]).T
 Z = clf.decision_function(xy).reshape(XX.shape)
 # 画分类边界
 ax.contour(XX, YY, Z, colors='k', levels=[-1, 0, 1], alpha=0.5,
-           linestyles=['--', '-', '--'])
+			linestyles=['--', '-', '--'])
 plt.title("Maximum margin using LinearSVC")
 plt.show()
