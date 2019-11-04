@@ -13,8 +13,8 @@ iris = datasets.load_iris()
 X = iris.data[:, [0, 2]]
 Y = iris.target
 
-X,x_test,Y,y_test=train_test_split(X,Y,test_size=0.25,random_state=0,stratify=Y)
-x_test,y_test=X,Y
+X,x_test,Y,y_test=train_test_split(X,Y,test_size=0.25,stratify=Y)
+# x_test,y_test=X,Y
 # 构造三个基学习器和一个集成学习器
 clf1 = DecisionTreeClassifier(max_depth=4)
 clf2 = KNeighborsClassifier(n_neighbors=7)
